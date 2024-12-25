@@ -1,0 +1,21 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server  # 마이크로 서비스간 unique ID로 사용된다.
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      default_zone:
+        http://${eureka.instance.hostname}:8761/eureka
+#      default_zone: http://192.168.56.2:8761/eureka
+#      default_zone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    hostname: eureka-sever
+
