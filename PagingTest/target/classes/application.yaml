@@ -1,0 +1,38 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: show-tcDstrctMng-service
+
+  datasource:
+    hikari:
+      auto-commit: false
+      connection-test-query: select 1
+      maximum-pool-size: 10
+      pool-name: MyHikariCP
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://211.189.132.159:15433/test_srlk3
+      username: postgres
+      password: postgres
+
+  jpa:
+    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}} # random port 사용시 eureka server에 인스턴스가 각각 표시되지 않는다
+    preferIpAddress: true # 서비스간 통신 시 hostname 보다 ip 를 우선
+    hostname: ${eureka.instance.host:localhost}
+  client:
+    register-with-eureka: true
+    disable-delta: true
+    service-url:
+      #      defaultZone: http://192.168.56.2:8761/eureka
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka
